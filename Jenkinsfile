@@ -4,10 +4,7 @@ pipeline {
         stage('Build') {
             steps {
               retry(3) {
-                    bat '''
-                           set
-                           .\sampleBatFiles\sample_script.bat
-                        '''
+                    bat '.\sampleBatFiles\sample_script.bat'
                 }
                 timeout(time: 10, unit: 'SECONDS') {
                     bat '.\sampleBatFiles\timeout.bat'
