@@ -10,9 +10,7 @@ pipeline {
                         '''
                 }
                 timeout(time: 1, unit: 'MINUTES') {
-                    retry(5){
-                        bat '.\sampleBatFiles\timeout.bat'
-                    }
+                    bat '.\sampleBatFiles\timeout.bat'
                 }
             }
         }
