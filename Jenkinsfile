@@ -1,12 +1,18 @@
 pipeline {
-    agent { docker { image 'node:6.3' } }
+    agent any
     stages {
-        stage('build') {
+        stage('Build') {
             steps {
-                sh '''
-                     echo Hello Worl!d
-                     npm --version
-                   '''
+              retry(3) {
+                    bat '''
+                           set
+                           .\sampleBatFiles\sample_script.bat
+                        '''
+                }
+
+                timeout(time: 3, unit: 'MINUTES') {
+                    bat '.\sampleBatFiles\timeout.bat'
+                }
             }
         }
     }
