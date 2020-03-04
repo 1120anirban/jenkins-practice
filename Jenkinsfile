@@ -5,8 +5,6 @@ pipeline {
             steps {
               retry(3) {
                     bat 'sampleBatFiles\\sample_script.bat'
-//                            set
-//                            ./'
                 }
                 timeout(time: 2, unit: 'MINUTES') {
                     bat '\\sampleBatFiles\\timeout.bat'
