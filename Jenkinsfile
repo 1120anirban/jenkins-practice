@@ -4,13 +4,13 @@ pipeline {
         stage('Build') {
             steps {
               retry(3) {
-                    bat set
-/*                            set
-//                            ./sampleBatFiles/sample_script.bat'
+                    bat 'sampleBatFiles\sample_script.bat'
+//                            set
+//                            ./'
 */
                 }
-                timeout(time: 1, unit: 'MINUTES') {
-//                    bat './sampleBatFiles/timeout.bat'
+                timeout(time: 2, unit: 'MINUTES') {
+                    bat 'sampleBatFiles\timeout.bat'
                 }
             }
         }
