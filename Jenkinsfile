@@ -9,7 +9,7 @@ pipeline {
                            .\sampleBatFiles\sample_script.bat
                         '''
                 }
-                timeout(time: 1, unit: 'MINUTES') {
+                timeout(time: 10, unit: 'SECONDS') {
                     bat '.\sampleBatFiles\timeout.bat'
                 }
             }
