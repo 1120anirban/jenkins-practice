@@ -3,11 +3,14 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh 'echo "Hello Worl!d"'
-                sh '''
-                    echo "Multiline shell steps works too"
-                    ls -al
-                '''
+                timeout(time: 3, unit: 'MINUTES') {
+                    retry(3) {
+                        sh './sampleBashScripts/flakey-deploy.sh'
+                    }
+                }
+                timeout(time: 3, unit: 'MINUTES') {
+                    sh './sampleBashScripts/health-check.sh'
+                }
             }
         }
     }
