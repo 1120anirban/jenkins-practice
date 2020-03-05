@@ -26,7 +26,7 @@ pipeline {
     post {
         always {
             echo 'One way or another, I have finished'
-            deleteDir('/var/www/html/') /* clean up our workspace */
+            deleteDir('varwwwhtml') /* clean up our workspace */
         }
         success {
             echo 'I succeeeded!'
