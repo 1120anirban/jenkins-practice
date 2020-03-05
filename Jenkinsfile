@@ -11,8 +11,8 @@ pipeline {
                         sampleBatFiles\\sample_script.bat
                     '''
                 }
-                timeout(time: 2, unit: 'MINUTES') {
-                    retry(2) {
+                timeout(time: 3, unit: 'MINUTES') {
+                    retry(3) {
                         bat 'sampleBatFiles\\timeout.bat'
                     }
                 }
