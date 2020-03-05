@@ -1,33 +1,16 @@
-def deleteDir(){
-    echo "Delete Dir dirPath"
-}
 pipeline {
-    agent {
-        docker { image 'node:7-alpine' }
-    }
-    options {
-        skipStagesAfterUnstable()
-    }
-    environment {
-        DISABLE_AUTH = 'true'
-        DB_ENGINE    = 'sqlite'
-    }
+    agent any
     stages {
-        stage('Build') {
-            steps {
-                echo "Database engine is ${DB_ENGINE}"
-                echo "DISABLE_AUTH is ${DISABLE_AUTH}"
-                sh 'printenv'
-            }
-        }
         stage('Test') {
             steps {
-                sh 'node --version'
-            }
-        }
-        stage('Deploy - Staging') {
-            steps {
-                sh 'sampleBashScripts/health-check.sh'
+                timeout(time: 3, unit: 'MINUTES') {
+                    retry(3) {
+                        sh './sampleBashScripts/flakey-deploy.sh'
+                    }
+                }
+                timeout(time: 3, unit: 'MINUTES') {
+                    sh './sampleBashScripts/health-check.sh'
+                }
             }
         }
         stage('Sanity check') {
@@ -37,27 +20,26 @@ pipeline {
         }
         stage('Deploy - Production') {
             steps {
-                sh 'ls -al'
+                sh './sampleBashScripts/health-check.sh'
             }
         }
     }
     post {
         always {
-            echo 'One way or another, I have finished'
-            deleteDir() /* clean up our workspace */
+            echo 'This will always run'
         }
         success {
-            echo 'I succeeeded!'
-        }
-        unstable {
-            echo 'I am unstable :/'
+            echo 'This will run only if successful'
         }
         failure {
-            echo 'I failed :('
-            mail to: 'team@example.com', subject: "Failed Pipeline: ${currentBuild.fullDisplayName}", body: "Something is wrong with ${env.BUILD_URL}"
+            echo 'This will run only if failed'
+        }
+        unstable {
+            echo 'This will run only if the run was marked as unstable'
         }
         changed {
-            echo 'Things were different before...'
+            echo 'This will run only if the state of the Pipeline has changed'
+            echo 'For example, if the Pipeline was previously failing but is now successful'
         }
     }
 }
