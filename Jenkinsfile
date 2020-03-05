@@ -37,6 +37,7 @@ pipeline {
         }
         stage('Deploy - Production') {
             steps {
+                sh 'ls -al'
             }
         }
     }
