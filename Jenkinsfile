@@ -1,5 +1,5 @@
-def deleteDir(String dirPath){
-    echo Delete Dir $dirPath
+def deleteDir(){
+    echo "Delete Dir dirPath"
 }
 pipeline {
     agent {
@@ -26,7 +26,7 @@ pipeline {
     post {
         always {
             echo 'One way or another, I have finished'
-            deleteDir('varwwwhtml') /* clean up our workspace */
+            deleteDir() /* clean up our workspace */
         }
         success {
             echo 'I succeeeded!'
