@@ -1,5 +1,5 @@
-def deleteDir(dirPath){
-    echo "Delete Dir $dirPath"
+def deleteDir(String dirPath){
+    echo Delete Dir $dirPath
 }
 pipeline {
     agent {
