@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Deploy - Staging') {
             steps {
-                sh './sampleBashScripts/health-check.sh'
+                sh 'sampleBashScripts/health-check.sh'
             }
         }
         stage('Sanity check') {
