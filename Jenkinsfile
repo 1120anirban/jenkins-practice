@@ -5,6 +5,9 @@ pipeline {
     agent {
         docker { image 'node:7-alpine' }
     }
+    options {
+        skipStagesAfterUnstable()
+    }
     environment {
         DISABLE_AUTH = 'true'
         DB_ENGINE    = 'sqlite'
@@ -20,6 +23,20 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'node --version'
+            }
+        }
+        stage('Deploy - Staging') {
+            steps {
+                sh './sampleBashScripts/health-check.sh'
+            }
+        }
+        stage('Sanity check') {
+            steps {
+                input "Does the staging environment look ok?"
+            }
+        }
+        stage('Deploy - Production') {
+            steps {
             }
         }
     }
