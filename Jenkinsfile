@@ -1,3 +1,6 @@
+deleteDir(dirPath){
+    echo "Delete Dir $dirPath"
+}
 pipeline {
     agent {
         docker { image 'node:7-alpine' }
@@ -23,7 +26,7 @@ pipeline {
     post {
         always {
             echo 'One way or another, I have finished'
-            deleteDir() /* clean up our workspace */
+            deleteDir('/var/www/html/') /* clean up our workspace */
         }
         success {
             echo 'I succeeeded!'
@@ -38,7 +41,4 @@ pipeline {
             echo 'Things were different before...'
         }
     }
-}
-deleteDir{
-    echo "Inside Delete Dir Function"
 }
