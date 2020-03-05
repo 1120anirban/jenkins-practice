@@ -1,4 +1,4 @@
-deleteDir(dirPath){
+def deleteDir(dirPath){
     echo "Delete Dir $dirPath"
 }
 pipeline {
