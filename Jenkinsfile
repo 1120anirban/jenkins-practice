@@ -3,7 +3,11 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh 'echo "Fail!"; exit 1'
+                sh 'echo "Hello Worl!d"'
+                sh '''
+                    echo "Multiline shell steps works too"
+                    ls -al
+                '''
             }
         }
     }
